@@ -22,6 +22,10 @@ window.onload = async function() {
 
         // 2. Chart 1: Timeline
         const ctx1 = document.getElementById('myChart').getContext('2d');
+        // Only take the last 10 entries so it fits the screen without scrolling
+        const recentLabels = labels.slice(-10);
+        const recentTemps = temps.slice(-10);
+
         new Chart(ctx1, {
             type: 'line',
             data: {
