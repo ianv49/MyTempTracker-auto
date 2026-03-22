@@ -58,6 +58,17 @@ button:active {
     background: #30363d; /* Sleek grey for reload */
 }
 
+.log-link {
+    background: #30363d;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #444;
+}
+
 /* 4. Chart Container */
 .chart-container {
     width: 95%;
