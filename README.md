@@ -1,6 +1,7 @@
 # 📱 iPhone Temp Monitor PRO
 
 A mobile-first, tech-style dashboard built to log and monitor device temperatures over time. Hosted entirely on GitHub Pages.
+https://ianv49.github.io/MyTempTracker-auto/
 
 ## ✨ Features
 * **Timeline Chart:** Tracks recent temperature trends with an auto-fitting view (keeps Y-axis locked). Max values are highlighted in red.
