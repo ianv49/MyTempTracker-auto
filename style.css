@@ -1,96 +1,67 @@
-/* 1. Dark background for the whole page */
 body {
-    background-color: #0d1117; 
+    background-color: #0d1117;
     color: #c9d1d9;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 15px;
     margin: 0;
 }
 
-/* 2. Styling the Header */
-h1 {
-    color: #58a6ff;
-    font-weight: 400;
+h1 { color: #58a6ff; font-weight: 500; margin-bottom: 20px; }
+.chart-title { font-size: 1rem; align-self: flex-start; margin-left: 5%; color: #888; }
+
+/* Summary Cards */
+.summary-box {
+    display: flex;
+    gap: 15px;
+    width: 95%;
+    max-width: 600px;
+    margin-bottom: 20px;
 }
 
-/* 3. Styling the Controls (Input & Buttons) */
-.controls {
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
+.stat-card {
     background: #161b22;
+    border: 1px solid #30363d;
+    flex: 1;
     padding: 15px;
     border-radius: 12px;
-    border: 1px solid #30363d;
-}
-
-input {
-    background: #0d1117;
-    border: 1px solid #30363d;
-    color: #00f2ff; /* Neon blue text for the numbers */
-    padding: 10px;
-    border-radius: 8px;
-    width: 60px;
-    outline: none;
     text-align: center;
-    font-weight: bold;
 }
 
-button {
-    background: #238636; /* Success green */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
-}
+.stat-card p { margin: 0; font-size: 0.8rem; color: #888; text-transform: uppercase; }
+.stat-val { font-size: 1.5rem; font-weight: bold; color: #00f2ff; }
 
-button:active {
-    transform: scale(0.95);
-}
-
-.reload-btn {
-    background: #30363d; /* Sleek grey for reload */
-}
-
-.log-link {
-    background: #30363d;
-    color: white;
+/* Buttons */
+.controls { display: flex; gap: 10px; margin-bottom: 25px; }
+button, .log-link {
+    background: #21262d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
     padding: 10px 15px;
     border-radius: 8px;
     text-decoration: none;
     font-size: 14px;
-    font-weight: bold;
-    border: 1px solid #444;
+    font-weight: 600;
 }
+button:active { background: #30363d; }
 
-/* 4. Chart Container */
-.chart-container {
+/* Scrolling Chart Logic */
+.chart-wrapper {
     width: 95%;
     max-width: 600px;
     background: #161b22;
     border: 1px solid #30363d;
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    padding: 15px;
+    margin-bottom: 20px;
+    overflow-x: auto; /* Enables horizontal scroll */
 }
 
-.chart-container {
-    width: 95%;
-    max-width: 600px;
+.no-scroll { overflow-x: hidden; }
+
+.chart-area {
+    min-width: 800px; /* Forces the timeline to be wide */
     height: 300px;
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 12px;
-    padding: 10px;
-    overflow-x: auto; /* ALLOWS HORIZONTAL SCROLL */
-}
-/* Make the canvas inside twice as wide if there's lots of data */
-canvas {
-    min-width: 500px; 
 }
