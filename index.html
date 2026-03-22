@@ -3,20 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iPhone Temp Monitor</title>
+    <title>iPhone Temp Monitor PRO</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <h1>iPhone Temp Monitor</h1>
 
-    <div class="controls">
-        <button onclick="location.reload()" class="reload-btn">🔄 Refresh Chart</button>
-        <a href="data.txt" target="_blank" class="log-link">📄 View Log</a>
+    <div class="summary-box">
+        <div class="stat-card">
+            <p>Average</p>
+            <span id="avgTemp" class="stat-val">--</span>
+        </div>
+        <div class="stat-card">
+            <p>Highest</p>
+            <span id="maxTemp" class="stat-val" style="color:#ff4d4d">--</span>
+        </div>
     </div>
 
-    <div class="chart-container">
-        <canvas id="myChart"></canvas>
+    <div class="controls">
+        <button onclick="location.reload()" class="reload-btn">🔄 Refresh Data</button>
+        <a href="data.txt" target="_blank" class="log-link">📄 View Raw Log</a>
+    </div>
+
+    <h2 class="chart-title">Timeline (Scroll ↔️)</h2>
+    <div class="chart-wrapper">
+        <div class="chart-area">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <h2 class="chart-title">Top 10 Peaks (Pareto)</h2>
+    <div class="chart-wrapper no-scroll">
+        <canvas id="paretoChart"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
