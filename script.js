@@ -29,9 +29,9 @@ window.onload = async function() {
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: recentLabels,
                 datasets: [{
-                    data: temps,
+                    data: recentTemps,
                     borderColor: '#00f2ff',
                     backgroundColor: 'rgba(0, 242, 255, 0.1)',
                     fill: true,
