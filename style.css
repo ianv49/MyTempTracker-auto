@@ -59,7 +59,10 @@ button:active { background: #30363d; }
     overflow-x: auto; /* Enables horizontal scroll */
 }
 
+.no-scroll { overflow-x: hidden; }
+
+/* This makes the timeline wide enough to trigger scrolling */
 .chart-area {
-    width: 100%; /* Fits perfectly to your screen */
+    min-width: 800px; 
     height: 300px;
 }
