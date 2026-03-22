@@ -59,9 +59,7 @@ button:active { background: #30363d; }
     overflow-x: auto; /* Enables horizontal scroll */
 }
 
-.no-scroll { overflow-x: hidden; }
-
 .chart-area {
-    min-width: 800px; /* Forces the timeline to be wide */
+    width: 100%; /* Fits perfectly to your screen */
     height: 300px;
 }
