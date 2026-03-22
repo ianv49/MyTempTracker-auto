@@ -20,22 +20,19 @@ window.onload = async function() {
         document.getElementById('avgTemp').innerText = avg + "°C";
         document.getElementById('maxTemp').innerText = maxVal + "°C";
 
-        // 2. Chart 1: Timeline
+        // 2. Chart 1: Timeline (Restored full data array to fix red dot mismatch)
         const ctx1 = document.getElementById('myChart').getContext('2d');
-        // Only take the last 10 entries so it fits the screen without scrolling
-        const recentLabels = labels.slice(-10);
-        const recentTemps = temps.slice(-10);
-
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: recentLabels,
+                labels: labels,
                 datasets: [{
-                    data: recentTemps,
+                    data: temps,
                     borderColor: '#00f2ff',
                     backgroundColor: 'rgba(0, 242, 255, 0.1)',
                     fill: true,
                     tension: 0.4,
+                    // Colors the highest value red, standard blue for others
                     pointBackgroundColor: temps.map(t => t === maxVal ? '#ff4d4d' : '#00f2ff'),
                     pointRadius: temps.map(t => t === maxVal ? 7 : 4)
                 }]
@@ -45,22 +42,11 @@ window.onload = async function() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { 
-                        beginAtZero: false, 
-                        title: { display: true, text: '°C', color: '#888' },
-                        grid: { color: '#252525' }, 
-                        ticks: { color: '#888' } 
-                    },
+                    y: { title: { display: true, text: '°C', color: '#888' }, grid: { color: '#252525' }, ticks: { color: '#888' } },
                     x: { title: { display: true, text: 'Hour', color: '#888' }, ticks: { color: '#888' } }
                 }
             }
         });
-
-        // --- Chart 2 Observation ---
-        if (top10.length > 0) {
-            document.getElementById('paretoObservation').innerText = 
-                "Observation: Your highest peak of " + top10[0].t + "°C occurred at " + top10[0].l + ".";
-        }
 
         // 3. Chart 2: Pareto (Top 10 Descending)
         const combined = labels.map((l, i) => ({ l, t: temps[i] }));
@@ -82,11 +68,19 @@ window.onload = async function() {
                 responsive: true,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { title: { display: true, text: '°C' }, grid: { color: '#252525' }, ticks: { color: '#888' } },
-                    x: { title: { display: true, text: 'Peak Hours' }, ticks: { color: '#888' } }
+                    y: { title: { display: true, text: '°C', color: '#888'}, grid: { color: '#252525' }, ticks: { color: '#888' } },
+                    x: { title: { display: true, text: 'Peak Hours', color: '#888' }, ticks: { color: '#888' } }
                 }
             }
         });
+
+        // --- Chart 2 Observation text generation ---
+        if (top10.length > 0) {
+            const obsElement = document.getElementById('paretoObservation');
+            if(obsElement) {
+                obsElement.innerText = "Observation: Your highest peak of " + top10[0].t + "°C occurred at " + top10[0].l + ".";
+            }
+        }
 
     } catch (e) { console.error("Data error:", e); }
 };
