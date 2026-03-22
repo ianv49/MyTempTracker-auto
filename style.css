@@ -1,4 +1,13 @@
-html {
-  height: 100%;
-  width: 100%;
+body {
+  background-color: #0b0e14; /* Deep dark blue/black */
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif; /* A very modern "tech" font */
+}
+
+.chart-container {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5); /* Deep shadow */
 }
