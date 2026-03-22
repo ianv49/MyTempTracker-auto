@@ -56,6 +56,12 @@ window.onload = async function() {
             }
         });
 
+        // --- Chart 2 Observation ---
+        if (top10.length > 0) {
+            document.getElementById('paretoObservation').innerText = 
+                "Observation: Your highest peak of " + top10[0].t + "°C occurred at " + top10[0].l + ".";
+        }
+
         // 3. Chart 2: Pareto (Top 10 Descending)
         const combined = labels.map((l, i) => ({ l, t: temps[i] }));
         combined.sort((a, b) => b.t - a.t);
