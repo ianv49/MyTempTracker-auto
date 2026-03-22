@@ -10,13 +10,17 @@
 
     <h1>iPhone Temp Monitor</h1>
 
+    <div class="controls">
+        <input type="number" id="tempInput" placeholder="°C" step="0.1">
+        <button onclick="addTemp()">Add Data</button>
+        <button onclick="location.reload()" class="reload-btn">Reload</button>
+    </div>
+
     <div class="chart-container">
         <canvas id="myChart"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script src="script.js"></script>
-
 </body>
 </html>
