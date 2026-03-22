@@ -5,10 +5,12 @@ const ctx = document.getElementById('myChart').getContext('2d');
 const gradient = ctx.createLinearGradient(0, 0, 0, 400);
 gradient.addColorStop(0, 'rgba(0, 242, 255, 0.5)'); // Bright neon blue at top
 gradient.addColorStop(1, 'rgba(0, 242, 255, 0)');   // Fades to transparent
+shadowColor: 'rgba(0, 242, 255, 1)',
+shadowBlur: 10,
 
 // 3. Define your data
 const data = {
-  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'jFri', 'Sat', 'Sun'],
   datasets: [{
     label: 'Temperature',
     data: [22, 24, 21, 25, 28, 26, 23],
