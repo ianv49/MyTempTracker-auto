@@ -79,3 +79,18 @@ button:active {
     padding: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
+
+.chart-container {
+    width: 95%;
+    max-width: 600px;
+    height: 300px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 10px;
+    overflow-x: auto; /* ALLOWS HORIZONTAL SCROLL */
+}
+/* Make the canvas inside twice as wide if there's lots of data */
+canvas {
+    min-width: 500px; 
+}
