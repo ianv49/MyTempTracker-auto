@@ -1,58 +1,60 @@
-// 1. Generate 24 hours of random data
-const hours = Array.from({length: 24}, (_, i) => `${i}:00`);
-const temps = Array.from({length: 24}, () => (Math.random() * (30 - 15) + 15).toFixed(1));
-
-// 2. Populate the Table
-const tableBody = document.querySelector('#tempTable tbody');
-hours.forEach((hour, index) => {
-    let row = `<tr><td>${hour}</td><td>${temps[index]}°C</td></tr>`;
-    tableBody.innerHTML += row;
-});
-
-// 3. Create the Chart
-const ctx = document.getElementById('tempChart').getContext('2d');
+// 1. Get the drawing area (canvas)
 const ctx = document.getElementById('myChart').getContext('2d');
+
+// 2. Create a "Neon Glow" gradient for the background
 const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-gradient.addColorStop(0, 'rgba(0, 242, 255, 0.5)'); // Neon blue at top
+gradient.addColorStop(0, 'rgba(0, 242, 255, 0.5)'); // Bright neon blue at top
 gradient.addColorStop(1, 'rgba(0, 242, 255, 0)');   // Fades to transparent
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: hours,
-        datasets: [{
-            label: 'Temperature over 24 Hours',
-            data: temps,
-            borderColor: '#007AFF', // iPhone Blue
-            tension: 0.3
-        }]
-    }
-options: {
-  responsive: true,
-  plugins: {
-    legend: { display: false } // Techie charts often hide the legend
-  },
-  scales: {
-    y: {
-      grid: { color: '#252525' }, // Subtle dark grid lines
-      ticks: { color: '#888' }    // Grey text for a cleaner look
+
+// 3. Define your data
+const data = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  datasets: [{
+    label: 'Temperature',
+    data: [22, 24, 21, 25, 28, 26, 23],
+    fill: true,
+    backgroundColor: gradient,     // Uses the neon gradient
+    borderColor: '#00f2ff',         // Solid neon blue line
+    borderWidth: 3,
+    pointBackgroundColor: '#00f2ff',
+    pointBorderColor: '#fff',
+    pointHoverRadius: 8,
+    tension: 0.4                   // This makes the line "curvy" and modern
+  }]
+};
+
+// 4. Configure the "Techie" look
+const config = {
+  type: 'line',
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false // Hiding the legend looks cleaner
+      }
     },
-    x: {
-      grid: { display: false }    // Hide vertical lines for "cleaner" look
-    }
-  },
-  elements: {
-    line: {
-      tension: 0.4,               // Makes the line curvy/smooth
-      borderWidth: 3,
-      borderColor: '#00f2ff',     // The neon line
-      fill: true,
-      backgroundColor: gradient   // Uses the gradient we made above
-    },
-    point: {
-      radius: 4,
-      hoverRadius: 8,
-      backgroundColor: '#00f2ff'
+    scales: {
+      y: {
+        beginAtZero: false,
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)' // Very subtle grid lines
+        },
+        ticks: {
+          color: '#888' // Modern grey text
+        }
+      },
+      x: {
+        grid: {
+          display: false // Hide vertical lines for a minimalist look
+        },
+        ticks: {
+          color: '#888'
+        }
+      }
     }
   }
-}
-});
+};
+
+// 5. Create the chart
+const myChart = new Chart(ctx, config);
