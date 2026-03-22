@@ -1,12 +1,10 @@
-let myChart;
-
 window.onload = async function() {
     try {
         const response = await fetch('data.txt?t=' + Date.now());
         const text = await response.text();
         const entries = text.split('|');
-        const labels = [];
-        const temps = [];
+        
+        let labels = [], temps = [];
 
         entries.forEach(entry => {
             const [time, temp] = entry.split(',');
@@ -16,57 +14,69 @@ window.onload = async function() {
             }
         });
 
-        // FIND MAX VALUE: Determine which dot should be red
+        // 1. Calculations
+        const avg = (temps.reduce((a, b) => a + b, 0) / temps.length).toFixed(1);
         const maxVal = Math.max(...temps);
-        const pointColors = temps.map(t => t === maxVal ? '#ff4d4d' : '#00f2ff');
-        const pointRadii = temps.map(t => t === maxVal ? 8 : 4);
+        document.getElementById('avgTemp').innerText = avg + "°C";
+        document.getElementById('maxTemp').innerText = maxVal + "°C";
 
-        const ctx = document.getElementById('myChart').getContext('2d');
-        
-        myChart = new Chart(ctx, {
+        // 2. Chart 1: Timeline
+        const ctx1 = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx1, {
             type: 'line',
             data: {
                 labels: labels,
-                datasets: [
-                    {
-                        label: 'Temp',
-                        data: temps,
-                        fill: true,
-                        backgroundColor: 'rgba(0, 242, 255, 0.1)',
-                        borderColor: '#00f2ff',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        pointBackgroundColor: pointColors, // Red for max
-                        pointRadius: pointRadii           // Bigger for max
-                    },
-                    {
-                        label: 'Goal Line',
-                        data: Array(labels.length).fill(30), // Horizontal line at 30
-                        borderColor: 'rgba(255, 77, 77, 0.5)',
-                        borderDash: [5, 5], // Dotted line
-                        borderWidth: 2,
-                        fill: false,
-                        pointRadius: 0 // Hide dots on goal line
-                    }
-                ]
+                datasets: [{
+                    data: temps,
+                    borderColor: '#00f2ff',
+                    backgroundColor: 'rgba(0, 242, 255, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: temps.map(t => t === maxVal ? '#ff4d4d' : '#00f2ff'),
+                    pointRadius: temps.map(t => t === maxVal ? 7 : 4)
+                }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Helps with mobile scrolling
+                maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
                     y: { 
-                        suggestedMax: 35, 
+                        beginAtZero: false, 
+                        title: { display: true, text: '°C', color: '#888' },
                         grid: { color: '#252525' }, 
                         ticks: { color: '#888' } 
                     },
-                    x: { 
-                        grid: { display: false }, 
-                        ticks: { color: '#888' },
-                        min: labels.length > 10 ? labels.length - 10 : 0 // SCROLL EFFECT
-                    }
+                    x: { title: { display: true, text: 'Hour', color: '#888' }, ticks: { color: '#888' } }
                 }
             }
         });
-    } catch (e) { console.error(e); }
+
+        // 3. Chart 2: Pareto (Top 10 Descending)
+        const combined = labels.map((l, i) => ({ l, t: temps[i] }));
+        combined.sort((a, b) => b.t - a.t);
+        const top10 = combined.slice(0, 10);
+
+        const ctx2 = document.getElementById('paretoChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: top10.map(d => d.l),
+                datasets: [{
+                    data: top10.map(d => d.t),
+                    backgroundColor: '#7000ff',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { title: { display: true, text: '°C' }, grid: { color: '#252525' }, ticks: { color: '#888' } },
+                    x: { title: { display: true, text: 'Peak Hours' }, ticks: { color: '#888' } }
+                }
+            }
+        });
+
+    } catch (e) { console.error("Data error:", e); }
 };
